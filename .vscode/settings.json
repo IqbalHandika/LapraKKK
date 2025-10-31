@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "LapraKKK!!!.sln"
+    "dotnet.defaultSolution": "LapraKKK.sln"
 }
