@@ -3,7 +3,8 @@ using UnityEngine;
 public class SimpleMovement : MonoBehaviour
 {
     [Header("Pengaturan Gerak")]
-    public float kecepatanJalan = 15f; // Agak cepat karena kakinya panjang (8 meter)
+    public float kecepatanJalan = 10f; // Kecepatan jalan normal
+    public float kecepatanLari = 16f; // Kecepatan sprint (lebih cepat)
     public float gravitasi = -9.81f * 2; // Gravitasi diperberat biar gak melayang
     
     [Header("Pengaturan Kamera")]
@@ -15,6 +16,7 @@ public class SimpleMovement : MonoBehaviour
     float xRotation = 0f;
     Vector3 velocity;
     bool isGrounded;
+    bool isSprinting = false; // Track sprint state
 
     void Start()
     {
@@ -53,7 +55,11 @@ public class SimpleMovement : MonoBehaviour
         // Gerak sesuai arah hadap player
         Vector3 move = transform.right * x + transform.forward * z;
         
-        controller.Move(move * kecepatanJalan * Time.deltaTime);
+        // SPRINT: Tekan Left Shift untuk lari
+        isSprinting = Input.GetKey(KeyCode.LeftShift);
+        float currentSpeed = isSprinting ? kecepatanLari : kecepatanJalan;
+        
+        controller.Move(move * currentSpeed * Time.deltaTime);
 
         // 3. GRAVITASI
         velocity.y += gravitasi * Time.deltaTime;
